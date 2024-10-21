@@ -12,6 +12,13 @@ router = APIRouter(
 
 @router.get("/generateEqualGame")
 async def generate_position() -> JSONResponse:
+    """Api endpoint that generates a position for a game where
+    the pieces are moved to an equilibrium state.
+
+    Returns:
+        JSONResponse
+    """
+
     fen = get_equal_game()
 
     return JSONResponse(

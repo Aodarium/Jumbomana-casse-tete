@@ -1,2 +1,2 @@
 [Engine]
-stockfish= "/usr/games/stockfish"
+stockfish= "/opt/homebrew/bin/stockfish"

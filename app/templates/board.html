@@ -31,6 +31,7 @@
 			left: 50%;
 			margin-top: -60px;
 			margin-left: -60px;
+			z-index: 2;
 		}
 
 		@keyframes spin {
@@ -41,30 +42,71 @@
 				transform: rotate(360deg);
 			}
 		}
+
+		#smokeScreen {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: darkgray;
+			opacity: 0.5;
+			z-index: 1;
+			visibility: hidden;
+		}
 	</style>
 	<body>
+		<div id="smokeScreen"></div>
 		<div
 			id="main"
-			style="display: flex; flex-direction: column; align-items: center"
+			style="
+				display: flex;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+				flex-direction: column;
+				align-content: center;
+				justify-content: center;
+			"
 		>
 			<div id="myBoard" style="width: 400px"></div>
 			<div id="loader" style="visibility: hidden">
 				<div class="loader"></div>
 			</div>
+			<span id="player" style="margin: 5px"></span>
+			<span id="fenStr" style="margin: 5px"></span>
 			<button onclick="changePosition()">Change Position</button>
 		</div>
 	</body>
 
 	<script>
 		Chessboard("myBoard");
-// Add whose turn it is
+		changePosition();
+
 		async function changePosition() {
 			const loader = document.getElementById("loader");
+			const smokeScreen = document.getElementById("smokeScreen");
+			const playerDisplay = document.getElementById("player");
+			const fenDisplay = document.getElementById("fenStr");
+
 			loader.style.visibility = "visible";
-			const data = await fetch("http://127.0.0.1:8000/v1/generateEqualGame");
-			const fen = await data.json();
+			smokeScreen.style.visibility = "visible";
+
+			const { fen, player } = await fetchData();
+
 			loader.style.visibility = "hidden";
+			smokeScreen.style.visibility = "hidden";
+
+			playerDisplay.textContent = `Player: ${
+				player === "w" ? "white" : "black"
+			}`;
+			fenDisplay.textContent = `FEN: ${fen}`;
 			Chessboard("myBoard", fen.fen);
+		}
+
+		async function fetchData() {
+			const data = await fetch("/v1/generateEqualGame");
+			const { fen } = await data.json();
+			const player = fen.split(" ")[1];
+			return { fen, player };
 		}
 	</script>
 </html>

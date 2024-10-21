@@ -17,7 +17,7 @@ The pattern used here is the Model, View, Controller one. One server is being us
 Several routes are accessible:
 
     - /isRunning: test whether the server is running
-    - /v1/showGame: display a board game with a random position
+    - /display/showGame: display a board game with a random position
     - /v1/generateEqualGame: return a Fen string corresponding to an equal position between black and white
 
 For the frontend, a solution based on Jinja and Fastapi was chosen. Deploying a full application using Angulare or else seemed execive to me
