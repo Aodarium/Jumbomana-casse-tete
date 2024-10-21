@@ -1,7 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 
-from src.controller.board_func import get_equal_game
+from ..controllers.board_func import get_equal_game
 
 
 router = APIRouter(
@@ -11,8 +11,8 @@ router = APIRouter(
 
 
 @router.get("/generateEqualGame")
-async def generate_position(nb_moves: int = 10) -> JSONResponse:
-    fen = get_equal_game(nb_moves)
+async def generate_position() -> JSONResponse:
+    fen = get_equal_game()
 
     return JSONResponse(
         content={

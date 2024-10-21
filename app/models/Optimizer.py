@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from src.models.MovementList import MovementList, NextMovement
+from .MovementList import MovementList, NextMovement
 
 
 @dataclass

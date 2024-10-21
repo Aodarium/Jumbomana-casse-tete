@@ -1,4 +1,4 @@
-from src.models.MovementList import MovementList, NextMovement
+from ..models.MovementList import MovementList, NextMovement
 
 
 def format_info(info) -> MovementList:
