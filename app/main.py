@@ -12,9 +12,8 @@ from .routes import board
 
 app = FastAPI()
 
-origins = [
-    "*",
-]
+origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
