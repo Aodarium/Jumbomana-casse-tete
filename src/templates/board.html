@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+			integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.5.1.min.js"
+			integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+			crossorigin="anonymous"
+		></script>
+
+		<script
+			src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"
+			integrity="sha384-8Vi8VHwn3vjQ9eUHUxex3JSN/NFqUg3QbPyX8kWyb93+8AC/pPWTzj+nHtbC5bxD"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<style>
+		.loader {
+			border: 16px solid #f3f3f3; /* Light grey */
+			border-top: 16px solid #3498db; /* Blue */
+			border-radius: 50%;
+			width: 120px;
+			height: 120px;
+			animation: spin 2s linear infinite;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -60px;
+			margin-left: -60px;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+	<body>
+		<div
+			id="main"
+			style="display: flex; flex-direction: column; align-items: center"
+		>
+			<div id="myBoard" style="width: 400px"></div>
+			<div id="loader" style="visibility: hidden">
+				<div class="loader"></div>
+			</div>
+			<button onclick="changePosition()">Change Position</button>
+		</div>
+	</body>
+
+	<script>
+		Chessboard("myBoard");
+
+		async function changePosition() {
+			const loader = document.getElementById("loader");
+			loader.style.visibility = "visible";
+			const data = await fetch("http://127.0.0.1:8000/v1/generateEqualGame");
+			const fen = await data.json();
+			loader.style.visibility = "hidden";
+			Chessboard("myBoard", fen.fen);
+		}
+	</script>
+</html>
