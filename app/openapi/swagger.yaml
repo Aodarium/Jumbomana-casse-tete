@@ -1,0 +1,88 @@
+openapi: "3.0.3"
+info:
+  title: Chess game dispatchers
+  description: The purpose of this exercise is to create a server capable of generating random chess position where black and white are equals
+  version: "1.0"
+servers:
+  - url: http://0.0.0.0:8000
+    description: Main (test) server
+
+paths:
+  /isRunning:
+    description: Check if the server is running
+    get:
+      summary: Server status
+      description: Check if the server is running
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRunning:
+                    type: string
+                    example: "Server is running"
+
+  /display/equalBoard:
+    description: Render the board with the chess position
+    get:
+      summary: Render a position
+      description: Render the board with the chess position
+      responses:
+        "200":
+          description: OK
+          content:
+            "text/html":
+              schema:
+                type: object
+
+  /v1/generateEqualGame:
+    description: Api endpoint that generates a position for a game where the pieces are moved to an equilibrium state.
+    get:
+      summary: Generate a position
+      description: Generates a position for a game where the pieces are moved to an equilibrium state.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRunning:
+                    type: boolean
+        "429":
+          description: Buffers need to be loaded again
+          
+  /v1/isGameEqual:
+    description: Check if a given fen position is balanced
+    post:
+      summary: Check for balance
+      description: Check if a given fen position is balanced
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fen:
+                  type: string
+                  format: string
+
+      responses:
+        "200": # status code
+          description: The fen of the board was checked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isBoardEqual:
+                    type: boolean
+                    description: Is the game equal
+
+        "500":
+          description: Error while computing information.
