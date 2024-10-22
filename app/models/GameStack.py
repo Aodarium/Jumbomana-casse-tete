@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from threading import Thread
 
 from app.models.Board import Board
+from app.models.Errors import NoPositionYetError
 
 
 def singleton(class_):
@@ -35,22 +36,24 @@ class GameStack:
             try:
                 self.list_of_positions.append(self.load_one_of_position())
             except Exception as e:
-                pass
+                if len(self.list_of_positions) < 5:
+                    self.list_of_positions.append(self.load_one_of_position())
 
-    def load_one_of_position(self) -> str:
+    def load_one_of_position(self, nb_attempt: int = 1) -> str:
         """Loads a new random position and moves it to an equilibrium state"""
         chessboard = Board()
         chessboard.generate_random_position()
         if chessboard.move_to_equilibrium():
-            if chessboard.is_board_equal(chessboard.fen):
-                return chessboard.fen
-            else:
-                self.load_one_of_position()
-        else:
-            self.load_one_of_position()
+            return chessboard.fen
+        if nb_attempt < 10:
+            self.load_one_of_position(nb_attempt + 1)
         return ""
 
     def fetch_one(self) -> str:
         """Fetches one position and removes it from the list"""
-        Thread(target=self.populate, args={2}).start()
-        return self.list_of_positions.pop(0)
+        if len(self.list_of_positions) < 5:
+            Thread(target=self.populate, args={10}).start()
+        if len(self.list_of_positions) == 0:
+            raise NoPositionYetError
+        game = self.list_of_positions.pop(0)
+        return game

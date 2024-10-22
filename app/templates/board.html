@@ -96,6 +96,10 @@
 		async function fetchData() {
 			// Fetch a new position from the server.
 			const data = await fetch("/v1/generateEqualGame");
+			if (data.status === 429) {
+				alert("please wait a little for the buffer to be available again");
+				return { fen: "-", player: "-" };
+			}
 			const { fen } = await data.json();
 			const player = fen.split(" ")[1] === "w" ? "white" : "black";
 			return { fen, player };

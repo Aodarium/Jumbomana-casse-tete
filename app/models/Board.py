@@ -58,7 +58,7 @@ class Board:
     def generate_random_position(self):
         """Generate a random position for the chessboard"""
         self.chessboard = chess.Board.from_chess960_pos(random.randint(0, 959))
-        for _ in range(random.randint(0, 10)):
+        for _ in range(random.randint(3, 10)):
             self.analyze_position(
                 random_analysis=True,
             )
@@ -77,7 +77,7 @@ class Board:
             )
             move = self.get_next_move(EquilibriumMoveOptimizer)
             self.perform_movement(move)
-            if self.score == 0:
+            if self.is_board_equal(self.fen):
                 return True
         return False
 
@@ -138,8 +138,9 @@ class Board:
             fen (str): FEN representation of the board
         """
         try:
-            info = self.engine.analyse(chess.Board(fen), self.search_limit, multipv=1)
+            info = self.engine.analyse(chess.Board(fen), self.search_limit, multipv=3)
             return info[0]["score"].relative.cp < TRESHOLD_SCORE
         except Exception as e:
             logger.error(f"Error while checking FEN: {e}")
-            raise FenError
+            # raise FenError
+        return False

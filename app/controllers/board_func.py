@@ -12,8 +12,24 @@ def get_equal_game() -> str:
     Returns:
         str: The FEN representation of the chessboard in equilibrium state.
     """
+    # The following lines are for genereation one by one
+    # Results may be slow
+
+    # chessboard = Board()
+    # chessboard.generate_random_position()
+    # if chessboard.move_to_equilibrium():
+    #     return chessboard.fen
+    # else:
+    #     get_equal_game()
+
+    # The following lines are for genereation via threads
+    # It allows faster results
+
     game_stack = GameStack()
-    return game_stack.fetch_one()
+    game = game_stack.fetch_one()
+    if game is not None and len(game) > 10:
+        return game
+    get_equal_game()
 
 
 def verify_fen(fen: Fen) -> bool:

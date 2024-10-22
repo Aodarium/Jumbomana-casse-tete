@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.models.Errors import FenError, NoMovementError
+from app.models.Errors import FenError, NoMovementError, NoPositionYetError
 
 from .routes import chessgame, frontend
 
@@ -45,6 +45,15 @@ async def no_movement_handler(request: Request, _):
     """Returns an error for no movement available"""
     return JSONResponse(
         status_code=400,
+        content={"message": f"No more move is available"},
+    )
+
+
+@app.exception_handler(NoPositionYetError)
+async def no_movement_handler(request: Request, _):
+    """Returns an error for no movement available"""
+    return JSONResponse(
+        status_code=429,
         content={"message": f"No more move is available"},
     )
 
