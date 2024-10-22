@@ -1,12 +1,6 @@
-import chess.engine
-import tomli
-
-from ..models.Board import Board
-
-with open("config.toml", mode="rb") as configfile:
-    config = tomli.load(configfile)
-
-engine = chess.engine.SimpleEngine.popen_uci(config["engine"]["stockfish"])
+from app.models.Board import Board
+from app.models.GameStack import GameStack
+from app.models.variables import Fen
 
 
 def get_equal_game() -> str:
@@ -18,11 +12,10 @@ def get_equal_game() -> str:
     Returns:
         str: The FEN representation of the chessboard in equilibrium state.
     """
+    game_stack = GameStack()
+    return game_stack.fetch_one()
 
-    chessboard = Board(engine)
-    chessboard.generate_random_position()
-    if chessboard.move_to_equilibrium():
-        return chessboard.fen
-    else:
-        get_equal_game()
-    return ""
+
+def verify_fen(fen: Fen) -> bool:
+    print(fen.fen)
+    return Board().is_board_equal(str(fen.fen))
