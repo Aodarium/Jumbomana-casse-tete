@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import random
-from .MovementList import MovementList, NextMovement
+from .Movement import MovementList, NextMovement
 
 
 @dataclass

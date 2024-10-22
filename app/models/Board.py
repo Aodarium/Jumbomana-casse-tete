@@ -4,9 +4,11 @@ import random
 from typing import Optional
 import chess
 import chess.engine
+
+from app.models.Errors import NoMovementError
 from .Optimizer import Optimizer, EquilibriumMoveOptimizer, RandomMoveOptimizer
 
-from .MovementList import MovementList
+from .Movement import MovementList
 from ..utils.funcs import format_info, generate_random_move_list
 
 logger = logging.getLogger(__name__)
@@ -79,6 +81,9 @@ class Board:
         Returns:
             chess.Move: Move to perform
         """
+        if len(self.current_analyse) == 0:
+            raise NoMovementError
+
         next_move = optimizer_model.pick_next_move_from_list(self.current_analyse)
         self.score_if_movement = next_move.centipawn_score
         self.next_move = chess.Move.from_uci(next_move.pv)
