@@ -25,7 +25,7 @@ The `isRunning` route is used to automatically check whether the api is running.
 
 ## Configuration
 
-Adjust the `pyproject.toml` file with the location of the Stockfish instance to use and install the needed libraries.
+Adjust the `config.toml` file with the location of the Stockfish instance to use and install the needed libraries.
 
 
 ## Run the application
@@ -57,3 +57,4 @@ fastapi run app/main.py
  - https://python-chess.readthedocs.io/en/latest/
  - https://fastapi.tiangolo.com/
  - https://www.chessboardjs.com/
+ - https://tobiasahlin.com/spinkit/

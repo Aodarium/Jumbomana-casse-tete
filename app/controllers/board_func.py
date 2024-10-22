@@ -3,7 +3,7 @@ import tomli
 
 from ..models.Board import Board
 
-with open("pyproject.toml", mode="rb") as configfile:
+with open("config.toml", mode="rb") as configfile:
     config = tomli.load(configfile)
 
 engine = chess.engine.SimpleEngine.popen_uci(config["engine"]["stockfish"])
