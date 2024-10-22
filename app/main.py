@@ -54,7 +54,7 @@ async def no_movement_handler(request: Request, _):
     """Returns an error for no movement available"""
     return JSONResponse(
         status_code=429,
-        content={"message": f"No more move is available"},
+        content={"message": f"No more position is available"},
     )
 
 
