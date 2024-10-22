@@ -67,7 +67,7 @@
 				justify-content: center;
 			"
 		>
-			<div id="myBoard" style="width: 400px"></div>
+			<div id="myBoard" style="width: 600px"></div>
 			<div id="loader" style="visibility: hidden">
 				<div class="loader"></div>
 			</div>
@@ -81,31 +81,41 @@
 		Chessboard("myBoard");
 		changePosition();
 
-		async function changePosition() {
+		function adjustVisibility(visibility) {
+			// Adjust the visibility of the loader and smoke screen.
 			const loader = document.getElementById("loader");
 			const smokeScreen = document.getElementById("smokeScreen");
+
+			loader.style.visibility = visibility;
+			smokeScreen.style.visibility = visibility;
+		}
+
+		function updateInformation(player, fen) {
+			// Update player and FEN information in the UI.
 			const playerDisplay = document.getElementById("player");
 			const fenDisplay = document.getElementById("fenStr");
-
-			loader.style.visibility = "visible";
-			smokeScreen.style.visibility = "visible";
-
-			const { fen, player } = await fetchData();
-
-			loader.style.visibility = "hidden";
-			smokeScreen.style.visibility = "hidden";
-
-			playerDisplay.textContent = `Player: ${
-				player === "w" ? "white" : "black"
-			}`;
+			playerDisplay.textContent = `Player: ${player}`;
 			fenDisplay.textContent = `FEN: ${fen}`;
-			Chessboard("myBoard", fen);
+		}
+
+		async function changePosition() {
+			// Fetch a new position and update the chessboard and UI.
+			adjustVisibility("visible");
+			const { fen, player } = await fetchData();
+			adjustVisibility("hidden");
+
+			Chessboard("myBoard", {
+				orientation: player,
+				position: fen,
+			});
+			updateInformation(player, fen);
 		}
 
 		async function fetchData() {
+			// Fetch a new position from the server.
 			const data = await fetch("/v1/generateEqualGame");
 			const { fen } = await data.json();
-			const player = fen.split(" ")[1];
+			const player = fen.split(" ")[1] === "w" ? "white" : "black";
 			return { fen, player };
 		}
 	</script>

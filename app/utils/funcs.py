@@ -1,5 +1,5 @@
 import random
-from ..models.MovementList import MovementList, NextMovement
+from ..models.Movement import MovementList, NextMovement
 
 
 def format_info(info) -> MovementList:

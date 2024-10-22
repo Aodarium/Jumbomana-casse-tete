@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("/showGame")
+@router.get("/equalBoard")
 async def generate_position(request: Request):
     """Api endpoint that generates a display with a position for a game"""
     return TEMPLATES.TemplateResponse(

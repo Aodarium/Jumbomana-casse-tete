@@ -4,6 +4,8 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from app.models.Errors import NoMovementError
+
 from .routes import chessgame
 from .routes import frontend
 
@@ -32,12 +34,23 @@ app.mount(
 )
 
 
-@app.get("/")
+@app.get("/isRunning")
 async def root():
     """API endpoint that returns if the server is running"""
     return JSONResponse(
         status_code=200,
         content={"message": f"Server is running"},
+    )
+
+
+@app.exception_handler(NoMovementError)
+async def general_handler(request: Request, _):
+    """This endpoint does not support any real purpose.
+    It is only to show how to catch error during the execution of the program.
+    """
+    return JSONResponse(
+        status_code=400,
+        content={"message": f"No more move is available"},
     )
 
 
