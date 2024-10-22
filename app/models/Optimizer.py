@@ -41,7 +41,6 @@ class RandomMoveOptimizer(Optimizer):
     @staticmethod
     def pick_next_move_from_list(list_next_moves: list[MovementList]) -> NextMovement:
         move = random.choice(list_next_moves)
-        print(move.pv[0])
         return NextMovement(0, move.pv[0])
 
 

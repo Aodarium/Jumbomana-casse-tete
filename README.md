@@ -22,11 +22,14 @@ Several routes are accessible:
 
 For the frontend, a solution based on Jinja and Fastapi was chosen. Deploying a full application using Angulare or else seemed execive to me
 in this context. Moreover, existing libraries to display chess games were found easy to integrate in vanilla JS.
- 
+
+The `v1` is used in this case to prepare for later modifcations/improvement of the api without having to interupt the workflow of other users. 
+
+The `isRunning` route is used to automatically check whether the api is running. It can be link to server monitoring services.
 
 ## Configuration
 
-Adjust the `config.toml` file with the location of the Stockfish instance to use
+Adjust the `pyproject.toml` file with the location of the Stockfish instance to use and install the needed libraries.
 
 
 ## Run the application

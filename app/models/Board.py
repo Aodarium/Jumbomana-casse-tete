@@ -7,7 +7,7 @@ import chess.engine
 from .Optimizer import Optimizer, EquilibriumMoveOptimizer, RandomMoveOptimizer
 
 from .MovementList import MovementList
-from ..utils.funcs import format_info, generate_fake_move_list
+from ..utils.funcs import format_info, generate_random_move_list
 
 logger = logging.getLogger(__name__)
 
@@ -109,7 +109,7 @@ class Board:
         """
         if random_analysis:
             moves = list(self.chessboard.legal_moves)
-            self.current_analyse = generate_fake_move_list(moves)
+            self.current_analyse = generate_random_move_list(moves)
             return
 
         infos = self.engine.analyse(

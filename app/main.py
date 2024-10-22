@@ -1,6 +1,8 @@
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from .routes import chessgame
 from .routes import frontend
@@ -23,9 +25,16 @@ app.add_middleware(
 app.include_router(chessgame.router)
 app.include_router(frontend.router)
 
+BASE_PATH = Path(__file__).resolve().parent
+app.mount(
+    "/display/img",
+    StaticFiles(directory=str(BASE_PATH / "./templates/img"), html=True),
+)
+
 
 @app.get("/")
 async def root():
+    """API endpoint that returns if the server is running"""
     return JSONResponse(
         status_code=200,
         content={"message": f"Server is running"},
