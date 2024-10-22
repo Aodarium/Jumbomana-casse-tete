@@ -15,6 +15,7 @@ Several routes are accessible:
 - /isRunning: test whether the server is running
 - /display/equalBoard: display a board game with a random position
 - /v1/generateEqualGame: return a Fen string corresponding to an equal position between black and white
+- /v1/isGameEqual: return a boolean indicating if an equal position between black and white is found
 
 For the frontend, a solution based on Jinja and Fastapi was chosen. Deploying a full application using Angulare or else seemed execive to me
 in this context. Moreover, existing libraries to display chess games were found easy to integrate in vanilla JS.
