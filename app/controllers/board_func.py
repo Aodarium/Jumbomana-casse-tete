@@ -3,10 +3,10 @@ import chess.engine
 
 import tomli
 
-with open("config.toml", mode="rb") as configfile:
+with open("pyproject.toml", mode="rb") as configfile:
     config = tomli.load(configfile)
 
-engine = chess.engine.SimpleEngine.popen_uci(config["Engine"]["stockfish"])
+engine = chess.engine.SimpleEngine.popen_uci(config["engine"]["stockfish"])
 
 
 def get_equal_game() -> str:
@@ -25,3 +25,4 @@ def get_equal_game() -> str:
         return chessboard.fen
     else:
         get_equal_game()
+    return ""
