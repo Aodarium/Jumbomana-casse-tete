@@ -27,13 +27,12 @@ The `isRunning` route is used to automatically check whether the api is running.
 
 Adjust the `config.toml` file with the location of the Stockfish instance to use and install the needed libraries.
 
-
 ## Run the application
 
 Prepare the environment for the application by running the following command
 
 ```bash
-pip install -r requeriments.txt
+pip install -e .
 ```
 
 To deploy the application, run the following command in a terminal:
@@ -42,9 +41,9 @@ To deploy the application, run the following command in a terminal:
 fastapi run app/main.py
 ```
 
-## Possible improvements
+Results may differ a lit based on Stockfish's configuration.
 
- - at the loading of the api, generate 5 to 10 positions and store them in a cache file. Each time a position is asked by a user, re-compute one position to add it to the cache afterwards. This would reduce the latency due to "long" computatitons
+## Possible improvements
 
 - possibility to add d-dos protection directly in the api or to delegate it to the firewall
 

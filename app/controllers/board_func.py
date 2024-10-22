@@ -1,6 +1,6 @@
 from app.models.Board import Board
 from app.models.GameStack import GameStack
-from app.models.variables import Fen
+from app.models.api_variables import Fen
 
 
 def get_equal_game() -> str:
@@ -17,5 +17,12 @@ def get_equal_game() -> str:
 
 
 def verify_fen(fen: Fen) -> bool:
-    print(fen.fen)
+    """Verifies that game is in the equilibrium state
+
+    Args:
+        fen (Fen): fen to verify
+
+    Returns:
+        bool: is the game equal
+    """
     return Board().is_board_equal(str(fen.fen))

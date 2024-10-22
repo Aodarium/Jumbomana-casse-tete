@@ -5,13 +5,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.models.Errors import NoMovementError
+from app.models.Errors import FenError, NoMovementError
 
 from .routes import chessgame, frontend
 
-# Information
-# - protection against ddos attacks handle by firewall
-# - restriction access not needed
 
 app = FastAPI()
 
@@ -44,13 +41,20 @@ async def root():
 
 
 @app.exception_handler(NoMovementError)
-async def general_handler(request: Request, _):
-    """This endpoint does not support any real purpose.
-    It is only to show how to catch error during the execution of the program.
-    """
+async def no_movement_handler(request: Request, _):
+    """Returns an error for no movement available"""
     return JSONResponse(
         status_code=400,
         content={"message": f"No more move is available"},
+    )
+
+
+@app.exception_handler(FenError)
+async def no_movement_handler(request: Request, _):
+    """Return an error for an invalid Fen"""
+    return JSONResponse(
+        status_code=400,
+        content={"message": f"Fen is not valid"},
     )
 
 

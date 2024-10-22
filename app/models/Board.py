@@ -5,14 +5,22 @@ from typing import Optional
 
 import chess
 import chess.engine
+import tomli
 
-from app.models.Errors import NoMovementError
+from app.models.Errors import FenError, NoMovementError
 
 from ..utils.funcs import format_info, generate_random_move_list
 from .Movement import MovementList
 from .Optimizer import EquilibriumMoveOptimizer, Optimizer, RandomMoveOptimizer
 
+
 logger = logging.getLogger(__name__)
+
+with open("config.toml", mode="rb") as configfile:
+    config = tomli.load(configfile)
+
+engine = chess.engine.SimpleEngine.popen_uci(config["engine"]["stockfish"])
+TRESHOLD_SCORE = config["engine"]["score_for_equal"]
 
 
 @dataclass
@@ -25,7 +33,7 @@ class Board:
         time_limit: Time limit for the search
     """
 
-    engine: chess.engine
+    engine: chess.engine = engine
     depth_limit = 10
     time_limit = 10
 
@@ -34,7 +42,7 @@ class Board:
         self.next_move: chess.Move
         self._score: int = 100
         self.chessboard = chess.Board()
-        self.score_if_movement: int = None
+        self.score_if_movement: Optional[int] = None
         self.search_limit = chess.engine.Limit(
             depth=self.depth_limit, time=self.time_limit
         )
@@ -122,3 +130,16 @@ class Board:
             self.chessboard, self.search_limit, multipv=num_moves_to_return
         )
         self.current_analyse = [format_info(info) for info in infos]
+
+    def is_board_equal(self, fen: str) -> bool:
+        """Check if the current board is equal to the given FEN
+
+        Args:
+            fen (str): FEN representation of the board
+        """
+        try:
+            info = self.engine.analyse(chess.Board(fen), self.search_limit, multipv=1)
+            return info[0]["score"].relative.cp < TRESHOLD_SCORE
+        except Exception as e:
+            logger.error(f"Error while checking FEN: {e}")
+            raise FenError

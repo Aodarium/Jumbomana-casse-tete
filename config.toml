@@ -1,2 +1,3 @@
 [engine]
 stockfish= "/opt/homebrew/bin/stockfish"
+score_for_equal=5
