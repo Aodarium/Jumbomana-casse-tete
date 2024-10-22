@@ -1,7 +1,7 @@
-from ..models.Board import Board
 import chess.engine
-
 import tomli
+
+from ..models.Board import Board
 
 with open("pyproject.toml", mode="rb") as configfile:
     config = tomli.load(configfile)

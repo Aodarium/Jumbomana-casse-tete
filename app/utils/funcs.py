@@ -1,4 +1,5 @@
 import random
+
 from ..models.Movement import MovementList, NextMovement
 
 

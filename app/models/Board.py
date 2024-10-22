@@ -1,15 +1,16 @@
-from dataclasses import dataclass
 import logging
 import random
+from dataclasses import dataclass
 from typing import Optional
+
 import chess
 import chess.engine
 
 from app.models.Errors import NoMovementError
-from .Optimizer import Optimizer, EquilibriumMoveOptimizer, RandomMoveOptimizer
 
-from .Movement import MovementList
 from ..utils.funcs import format_info, generate_random_move_list
+from .Movement import MovementList
+from .Optimizer import EquilibriumMoveOptimizer, Optimizer, RandomMoveOptimizer
 
 logger = logging.getLogger(__name__)
 

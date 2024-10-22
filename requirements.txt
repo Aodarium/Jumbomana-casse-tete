@@ -2,3 +2,4 @@ chess
 fastapi
 tomli
 uvicorn
+pytest

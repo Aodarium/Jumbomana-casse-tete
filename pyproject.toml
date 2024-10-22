@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = [
   { name="Florian" },
 ]
-description = "A small example package"
+description = "A program to display chess games"
 readme = "README.md"
 requires-python = ">=3.9"
 

@@ -1,13 +1,13 @@
 from pathlib import Path
+
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.models.Errors import NoMovementError
 
-from .routes import chessgame
-from .routes import frontend
+from .routes import chessgame, frontend
 
 # Information
 # - protection against ddos attacks handle by firewall
@@ -29,8 +29,8 @@ app.include_router(frontend.router)
 
 BASE_PATH = Path(__file__).resolve().parent
 app.mount(
-    "/display/img",
-    StaticFiles(directory=str(BASE_PATH / "./templates/img"), html=True),
+    "/display",
+    StaticFiles(directory=str(BASE_PATH / "./templates"), html=True),
 )
 
 

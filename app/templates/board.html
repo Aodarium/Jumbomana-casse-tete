@@ -6,6 +6,7 @@
 			integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
 			crossorigin="anonymous"
 		/>
+		<link rel="stylesheet" href="style.css" />
 		<script
 			src="https://code.jquery.com/jquery-3.5.1.min.js"
 			integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
@@ -19,30 +20,6 @@
 		></script>
 	</head>
 	<style>
-		.loader {
-			border: 16px solid #f3f3f3; /* Light grey */
-			border-top: 16px solid #3498db; /* Blue */
-			border-radius: 50%;
-			width: 120px;
-			height: 120px;
-			animation: spin 2s linear infinite;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin-top: -60px;
-			margin-left: -60px;
-			z-index: 2;
-		}
-
-		@keyframes spin {
-			0% {
-				transform: rotate(0deg);
-			}
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-
 		#smokeScreen {
 			position: absolute;
 			width: 100%;
@@ -69,11 +46,16 @@
 		>
 			<div id="myBoard" style="width: 600px"></div>
 			<div id="loader" style="visibility: hidden">
-				<div class="loader"></div>
+				<div class="double-bounce1"></div>
+				<div class="double-bounce2"></div>
 			</div>
-			<span id="player" style="margin: 5px"></span>
-			<span id="fenStr" style="margin: 5px"></span>
-			<button onclick="changePosition()">Change Position</button>
+			<button class="button" style="margin: 5px" onclick="changePosition()">
+				Generate Position
+			</button>
+			<span id="player" style="margin: 5px">Player:</span>
+
+			<span style="margin: 5px">Fen corresponding to this position:</span>
+			<span id="fenStr" style="margin: 5px">-</span>
 		</div>
 	</body>
 

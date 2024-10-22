@@ -1,4 +1,5 @@
 import pytest
+
 from app.models.Movement import MovementList
 from app.models.Optimizer import EquilibriumMoveOptimizer, RandomMoveOptimizer
 

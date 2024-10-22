@@ -3,7 +3,6 @@ from fastapi.responses import JSONResponse
 
 from ..controllers.board_func import get_equal_game
 
-
 router = APIRouter(
     prefix="/v1",
     responses={404: {"description": "Not found"}},

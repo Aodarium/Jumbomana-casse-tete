@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 import random
+from dataclasses import dataclass
+
 from .Movement import MovementList, NextMovement
 
 
