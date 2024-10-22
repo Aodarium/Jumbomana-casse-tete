@@ -51,7 +51,7 @@ async def no_movement_handler(request: Request, _):
 
 @app.exception_handler(NoPositionYetError)
 async def no_movement_handler(request: Request, _):
-    """Returns an error for no movement available"""
+    """Returns an error for no position available"""
     return JSONResponse(
         status_code=429,
         content={"message": f"No more position is available"},
